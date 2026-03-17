@@ -1,0 +1,37 @@
+{
+  "id": "PID-90bf4c8e",
+  "name": "BriefingPro",
+  "slug": "briefing-pro",
+  "repoPath": "/Users/michaelatherton/Projects/briefing-pro",
+  "repoRemote": null,
+  "currentPhase": "build",
+  "phaseHistory": [
+    { "phase": "0", "source": "imported", "importedFrom": "design-system/hyper-personalized-briefing-platform/PRD.md § Product Vision" },
+    { "phase": "0b", "source": "imported", "importedFrom": "design-system/hyper-personalized-briefing-platform/PRD.md § Target User" },
+    { "phase": "1", "source": "imported", "importedFrom": "design-system/hyper-personalized-briefing-platform/MASTER.md" },
+    { "phase": "2", "source": "imported", "importedFrom": "design-system/hyper-personalized-briefing-platform/pages/" },
+    { "phase": "3", "source": "imported", "importedFrom": "design-system/hyper-personalized-briefing-platform/pages/" },
+    { "phase": "4", "completedAt": "2026-03-08" },
+    { "phase": "5", "completedAt": "2026-03-08" },
+    { "phase": "5a", "completedAt": "2026-03-08", "note": "Persona extraction" },
+    { "phase": "5b", "completedAt": "2026-03-08", "note": "UX spec + feature specs + component validation" },
+    { "phase": "8", "completedAt": "2026-03-08", "note": "Auth + app shell + routing + types built" }
+  ],
+  "orientation": {
+    "what": "BriefingPro lets executive coaches create hyper-personalized briefings for their clients — scaling the coach's judgment across their entire roster without manual grunt work.",
+    "done": "A coach can select a client, generate a personalized briefing, review/edit it, and deliver it branded — in under 5 minutes, with the output indistinguishable from manually written content."
+  },
+  "modules": ["DeployRailway", "AuthClerk", "ObservabilitySentry"],
+  "stack": {
+    "language": "TypeScript",
+    "framework": "React + Vite",
+    "deploy": "Railway",
+    "external": ["NotebookLM Podcast API", "Email delivery (Resend/SendGrid)", "Object storage (R2/S3)"]
+  },
+  "personas": ["executive-coach"],
+  "maturityScore": null,
+  "status": "active",
+  "prdPath": "docs/imported/PRD.md",
+  "createdAt": "2026-03-08",
+  "updatedAt": "2026-03-08"
+}

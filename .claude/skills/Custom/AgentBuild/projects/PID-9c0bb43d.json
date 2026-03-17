@@ -1,0 +1,29 @@
+{
+  "id": "PID-9c0bb43d",
+  "name": "PAI Executive Assistant",
+  "slug": "pai-executive-assistant",
+  "repoPath": "/Users/michaelatherton/projects/pai-executive-assistant",
+  "repoRemote": null,
+  "currentPhase": "1",
+  "phaseHistory": [
+    { "phase": "0", "completedAt": "2026-02-23" },
+    { "phase": "0b", "completedAt": "2026-02-23" }
+  ],
+  "orientation": {
+    "what": "PAI Executive Assistant gives non-technical CEOs a mobile-first chat interface to harness PAI's structured thinking, persistent memory, and specialized skills — without touching a terminal.",
+    "done": "A non-technical CEO opens the app, receives a personalized briefing, has a strategic conversation, and produces a refined artifact — all in their first session without any technical guidance."
+  },
+  "modules": ["FrameworkNextjs", "ChatInterface"],
+  "stack": {
+    "language": "typescript",
+    "framework": "nextjs",
+    "deploy": "local",
+    "external": ["claude-code-sdk"]
+  },
+  "personas": ["james-the-non-technical-ceo"],
+  "maturityScore": null,
+  "status": "active",
+  "prdPath": null,
+  "createdAt": "2026-02-23",
+  "updatedAt": "2026-02-23"
+}

@@ -1,0 +1,80 @@
+{{!--
+  Opportunity Assessment Report Template
+  Used by Radar skill to format assessment results
+
+  Context:
+    - assessment: FitAssessment object
+    - config: { showDetails: boolean, showRecommendation: boolean }
+--}}
+
+# RADAR ASSESSMENT
+
+**{{assessment.opportunity.title}}**
+{{#if assessment.opportunity.company}}{{assessment.opportunity.company}} | {{/if}}{{#if assessment.opportunity.location}}{{assessment.opportunity.location}}{{/if}}
+
+---
+
+## OVERALL FIT: {{formatScore assessment.overallScore}}/1.00 ({{uppercase assessment.recommendation}})
+
+---
+
+## TELOS ALIGNMENT ({{formatScore assessment.telosAlignment.overall}})
+
+| Dimension | Score | Notes |
+|-----------|-------|-------|
+| Mission | {{formatScore assessment.telosAlignment.mission}} | {{assessment.telosAlignment.details.mission}} |
+| Goals | {{formatScore assessment.telosAlignment.goals}} | {{assessment.telosAlignment.details.goals}} |
+| Beliefs | {{formatScore assessment.telosAlignment.beliefs}} | {{assessment.telosAlignment.details.beliefs}} |
+| Strategies | {{formatScore assessment.telosAlignment.strategies}} | {{assessment.telosAlignment.details.strategies}} |
+| Narratives | {{formatScore assessment.telosAlignment.narratives}} | {{assessment.telosAlignment.details.narratives}} |
+
+---
+
+## ARCHITECTURE FIT ({{formatScore assessment.architectureFit.overall}})
+
+| Dimension | Score | Notes |
+|-----------|-------|-------|
+| Autonomy | {{formatScore assessment.architectureFit.autonomy}} | {{assessment.architectureFit.details.autonomy}} |
+| Structure | {{formatScore assessment.architectureFit.structure}} | {{assessment.architectureFit.details.structure}} |
+| Risk | {{formatScore assessment.architectureFit.risk}} | {{assessment.architectureFit.details.risk}} |
+| Meaning | {{formatScore assessment.architectureFit.meaning}} | {{assessment.architectureFit.details.meaning}} |
+| Work Style | {{formatScore assessment.architectureFit.workStyle}} | {{assessment.architectureFit.details.workStyle}} |
+
+---
+
+## HARD LIMITS
+
+{{#if assessment.hardLimits.passed}}
+✓ All hard limits pass
+{{else}}
+⚠️ **VIOLATIONS DETECTED:**
+{{#each assessment.hardLimits.violations}}
+- {{this}}
+{{/each}}
+{{/if}}
+
+---
+
+{{#if assessment.warnings.length}}
+## WARNINGS
+
+{{#each assessment.warnings}}
+- ⚠️ {{this}}
+{{/each}}
+
+---
+{{/if}}
+
+## SUMMARY
+
+{{assessment.summary}}
+
+---
+
+**RECOMMENDATION:** {{uppercase assessment.recommendation}}
+
+{{#if assessment.opportunity.url}}
+**URL:** {{assessment.opportunity.url}}
+{{/if}}
+
+*Assessed: {{assessment.assessedAt}}*

@@ -1,0 +1,51 @@
+{
+  "sources": [
+    {
+      "id": "manual",
+      "name": "Manual Submission",
+      "type": "manual",
+      "description": "Opportunities submitted directly by user",
+      "frequency": "immediate",
+      "enabled": true
+    },
+    {
+      "id": "hn_whoishiring",
+      "name": "HN Who's Hiring",
+      "type": "rss",
+      "url": "https://hnrss.org/whoishiring/jobs",
+      "description": "Monthly HackerNews hiring thread",
+      "frequency": "monthly",
+      "enabled": false
+    },
+    {
+      "id": "custom_rss",
+      "name": "Custom RSS Feeds",
+      "type": "rss",
+      "urls": [],
+      "description": "User-configured RSS feeds",
+      "frequency": "daily",
+      "enabled": false
+    },
+    {
+      "id": "linkedin_saved",
+      "name": "LinkedIn Saved Searches",
+      "type": "scrape",
+      "method": "brightdata",
+      "urls": [],
+      "description": "LinkedIn job searches (requires BrightData)",
+      "frequency": "daily",
+      "enabled": false
+    },
+    {
+      "id": "github_trending",
+      "name": "GitHub Trending Projects",
+      "type": "api",
+      "endpoint": "https://api.github.com/search/repositories",
+      "category": "projects",
+      "description": "Trending repos that might indicate opportunities",
+      "frequency": "weekly",
+      "enabled": false
+    }
+  ],
+  "lastUpdated": "2026-02-03T00:00:00Z"
+}

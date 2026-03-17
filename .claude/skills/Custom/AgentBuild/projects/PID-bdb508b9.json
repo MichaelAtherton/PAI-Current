@@ -1,0 +1,36 @@
+{
+  "id": "PID-bdb508b9",
+  "name": "BrieflyAI",
+  "slug": "briefly-ai",
+  "repoPath": "/Users/michaelatherton/projects/briefly-ai",
+  "repoRemote": null,
+  "currentPhase": "4-complete",
+  "phaseHistory": [
+    { "phase": "0", "completedAt": "2026-02-21" },
+    { "phase": "0b", "completedAt": "2026-02-21" },
+    { "phase": "1", "completedAt": "2026-02-21" },
+    { "phase": "2", "completedAt": "2026-02-21" },
+    { "phase": "4", "completedAt": "2026-02-21" }
+  ],
+  "orientation": {
+    "what": "BrieflyAI delivers hyper-personalized, evidence-based executive briefings on any professional topic to busy continuous learners who lack time for books, courses, or executive education — distilling the best thought leadership and research into a digestible format tailored to their specific role, industry, and objectives.",
+    "done": "MVP is done when a user can sign up, provide their professional context through a conversational onboarding, request a briefing on any topic, and receive a 10-15 page hyper-personalized written briefing that covers foundations through good-to-great progression with industry-specific examples — and they say 'it's like it's speaking to me.'"
+  },
+  "modules": ["AuthClerk", "DbSupabase", "DeployRailway", "ObservabilitySentry"],
+  "stack": {
+    "language": "TypeScript",
+    "framework": "Next.js",
+    "deploy": "Railway",
+    "external": ["Claude API (Opus 4.6)", "Resend (email)"]
+  },
+  "personas": ["david-chen"],
+  "maturityScore": null,
+  "status": "active",
+  "prdPath": null,
+  "createdAt": "2026-02-21",
+  "updatedAt": "2026-02-21",
+  "mvpScope": {
+    "included": ["B2C consumer flow", "Written briefing output", "Conversational onboarding", "Email notification async", "In-app reading + PDF download", "First briefing free", "Multi-agent research pipeline"],
+    "excluded": ["Podcast generation", "Self-assessment", "Learning journey/curriculum", "Coach/B2B white-label", "Expert roundtable", "Text message delivery", "Smart content chunking"]
+  }
+}

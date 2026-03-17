@@ -1,0 +1,38 @@
+{
+  "id": "PID-00f29664",
+  "name": "Caliber — Coaching Practice OS",
+  "slug": "caliber",
+  "repoPath": "/Users/michaelatherton/projects/caliber",
+  "repoRemote": "https://github.com/MichaelAtherton/caliber",
+  "currentPhase": "4",
+  "phaseHistory": [
+    { "phase": "0", "completedAt": "2026-02-22" },
+    { "phase": "0b", "completedAt": "2026-02-22" },
+    { "phase": "1a", "completedAt": "2026-02-22" },
+    { "phase": "1b", "completedAt": "2026-02-22" },
+    { "phase": "1c", "completedAt": "2026-02-22" },
+    { "phase": "2", "completedAt": "2026-02-23" },
+    { "phase": "3", "completedAt": "2026-02-23" }
+  ],
+  "orientation": {
+    "what": "A coaching practice OS that automates Steve Jacobs' manual executive coaching workflow into a multi-tenant conversational platform where coaches configure their own AI-powered practice and clients receive hyper-personalized learning briefings on any professional topic.",
+    "done": "Steve can configure his AI assistant's identity and skills via admin UI, Marcus can request and receive a hyper-personalized briefing + podcast within 48 hours, and the briefing demonstrably reflects his role, industry, and stated context."
+  },
+  "modules": ["AuthClerk", "DbSupabase", "DeployRailway", "ObservabilitySentry"],
+  "stack": {
+    "language": "typescript",
+    "frontend": "vite + react + tailwind",
+    "backend": "express",
+    "auth": "clerk",
+    "serverState": "react-query",
+    "database": "supabase",
+    "deploy": "railway",
+    "external": ["claude-api", "perplexity-api", "elevenlabs", "resend"]
+  },
+  "personas": ["marcus-learner", "steve-operator"],
+  "maturityScore": null,
+  "status": "active",
+  "prdPath": null,
+  "createdAt": "2026-02-22",
+  "updatedAt": "2026-02-22"
+}
