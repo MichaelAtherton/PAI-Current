@@ -47,6 +47,11 @@ bun.lockb
 *.log
 logs/
 
+# Media files
+*.mp3
+*.mp4
+*.wav
+
 # Temporary files
 *.tmp
 *.temp

@@ -1,11 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
-    "PAI_DIR": "/Users/michaelatherton/PAI_current/.claude",
+    "PAI_DIR": "/home/abba/Documents/apps/PAI-Current/.claude",
     "PROJECTS_DIR": "${HOME}/Projects",
     "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "80000",
     "BASH_DEFAULT_TIMEOUT_MS": "600000",
-    "PAI_CONFIG_DIR": "/Users/michaelatherton/PAI_current/.config/PAI",
+    "PAI_CONFIG_DIR": "/home/abba/Documents/apps/PAI_current/.config/PAI",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "permissions": {
@@ -220,7 +220,7 @@
           },
           {
             "type": "command",
-            "command": "bun ${PAI_DIR}/hooks/handlers/BuildCLAUDE.ts"
+            "command": "${PAI_DIR}/hooks/handlers/BuildCLAUDE.ts"
           }
         ]
       }
@@ -747,10 +747,10 @@
       "Anti-criteria capture what must NOT happen. Prefix with ISC-A.",
       "The Quality Gate checks count, length, state, testability, and anti-criteria.",
       "Effort levels: Standard < Extended < Advanced < Deep < Comprehensive. Five tiers.",
-      "Standard is the default effort level (~2 min). Only escalate when demanded.",
+      "Extended is the default effort level (~8 min). Standard is single file, single concern only.",
       "OBSERVE creates the PRD, writes ISC criteria, and does context recovery (Grep/Glob/Read ≤34s).",
       "Context recovery uses Grep/Glob/Read directly — never agents. 34-second hard gate.",
-      "Plan mode (EnterPlanMode) triggers at Advanced+ effort level.",
+      "Plan mode (EnterPlanMode) triggers at Extended+ effort level.",
       "PRDs persist ISC to disk. They survive across sessions. PRD on disk wins conflicts.",
       "Loop mode re-runs the Algorithm against failing PRD criteria until all pass.",
       "The Algorithm CLI: bun algorithm.ts -m loop -p PRD-file.md -n 128",
@@ -1054,14 +1054,14 @@
   },
   "counts": {
     "skills": 19,
-    "workflows": 238,
-    "hooks": 20,
-    "signals": 0,
-    "files": 12,
+    "workflows": 237,
+    "hooks": 21,
+    "signals": 2,
+    "files": 14,
     "work": 0,
-    "sessions": 3,
+    "sessions": 4,
     "research": 0,
-    "ratings": 1,
-    "updatedAt": "2026-03-17T02:45:38.924Z"
+    "ratings": 3,
+    "updatedAt": "2026-03-24T05:00:52.854Z"
   }
 }

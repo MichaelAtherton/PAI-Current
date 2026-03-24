@@ -1,0 +1,8 @@
+{
+  "rating": 3,
+  "summary": "Frustrated — incomplete delivery on URL processing",
+  "detailed_context": "User sent 2 URLs expecting PAI to extract knowledge mints and transcripts from both. PAI only delivered partial results: knowledge mint from one URL but not the second, and the transcript from the first URL is still pending. User is waiting for promised outputs that haven't materialized. This is a delivery failure — not a misunderstanding of the request, but a failure to fully process and return expected results across both URLs. The frustration stems from incomplete execution and unmet expectations. PAI should have either processed both URLs completely with both outputs (knowledge mint + transcript for each), or clearly communicated what it could and couldn't deliver. The pattern suggests User expects reliable, complete delivery of promised outputs, not partial or delayed results. This is compounded by the fact that User had to wait and then report the failure themselves rather than PAI proactively acknowledging the incomplete delivery.",
+  "session_id": "a360fb6b-9077-49f4-a5a0-6456b8b9fc17",
+  "captured_at": "2026-03-23T19:20:26.559Z",
+  "transcript_source": "a360fb6b-9077-49f4-a5a0-6456b8b9fc17.jsonl"
+}

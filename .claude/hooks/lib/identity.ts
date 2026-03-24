@@ -1,3 +1,4 @@
+/// <reference path="../node-shims.d.ts" />
 /**
  * Central Identity Loader
  * Single source of truth for DA (Digital Assistant) and Principal identity
