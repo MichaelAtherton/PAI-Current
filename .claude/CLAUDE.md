@@ -1,5 +1,8 @@
 # PAI 4.0.3 — Personal AI Infrastructure
 
+# VOICE OVERRIDE
+**Voice notifications are currently DISABLED.** Skip ALL voice curl commands (Algorithm phase announcements, mode transitions, skill workflow curls). Do not execute any `curl` to `localhost:8888/notify`. This saves tokens and time. Remove this section to re-enable voice.
+
 # MODES
 
 **The Algorithm is PAI's key quality assurance component.** It turns a capable model into a structured, verifiable workflow. The default assumption is: Algorithm is needed unless we are certain it is not. Err toward Algorithm, not away from it.
