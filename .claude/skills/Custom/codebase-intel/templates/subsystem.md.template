@@ -1,0 +1,50 @@
+---
+subsystem: {{SUBSYSTEM_NAME}}
+owns:
+  - {{RESPONSIBILITY_1}}
+key_files:
+  - {{FILE_PATH_1}}
+read_when:
+  - {{TRIGGER_1}}
+do_not_assume:
+  - {{ANTI_PRIOR_1}}
+  - {{ANTI_PRIOR_2}}
+is_cross_cutting: {{TRUE_OR_FALSE}}
+---
+
+## Actors
+
+{{ACTORS_LIST}}
+
+Each entry format: `ActorName` — `file:line` — one-line responsibility
+
+## Interfaces
+
+{{INTERFACES_LIST}}
+
+Each entry format: verbatim function signature or type definition from source, followed by `(file:line)`
+
+## Canonical patterns
+
+{{CANONICAL_PATTERNS}}
+
+Each entry: a verbatim code snippet (5-10 lines max) from source showing the specific way this subsystem handles a concern, with `(file:line)` reference above the snippet.
+
+## Data flow
+
+{{DATA_FLOW}}
+
+Format: step-by-step trace from entry to exit, each step on its own line with `(file:line)` reference.
+
+## Gotchas
+
+{{GOTCHAS_LIST}}
+
+Each entry: a non-obvious behavior, edge case, or deviation from expected patterns, grounded in source evidence with `(file:line)`.
+
+## Cross-cutting injection points
+
+{{CROSS_CUTTING_INJECTION_POINTS}}
+
+Only present if `is_cross_cutting: true`. Lists every subsystem this concern touches and the specific file:line where it injects.
+Remove this section entirely if `is_cross_cutting: false`.
