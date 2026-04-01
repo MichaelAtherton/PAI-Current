@@ -21,6 +21,20 @@ manifest: <full subsystem manifest JSON>
 output_path: output/repo-context/<subsystem>.md
 ```
 
+## How to populate frontmatter
+
+Derive each frontmatter field as follows — do not invent values:
+
+- **`owns`**: Derive from `inferred_responsibility` in the manifest for this subsystem. Decompose the one-sentence responsibility into 2-4 discrete ownership claims (e.g., "JWT issuance", "session validation", "user identity resolution"). Each claim becomes one array entry.
+
+- **`key_files`**: Use `root_files` from the manifest as the starting list. Add any files you read during extraction that are clearly central to the subsystem (not peripheral utilities). Cap at 5 files.
+
+- **`read_when`**: Derive from the subsystem name and `owns` array. For each ownership claim, write one task-trigger phrase describing when a developer would need to touch this subsystem (e.g., "adding a new API endpoint", "changing token expiry logic"). Write 2-5 entries as concrete task descriptions, not file names.
+
+- **`do_not_assume`**: Minimum 2 entries. Each entry must identify something this codebase actually does that contradicts what a generic AI would assume about this type of subsystem. Format: "This subsystem does NOT use `<X>` — it uses `<Y>` at `(file:line)`". Must be grounded in source evidence.
+
+- **`is_cross_cutting`**: Copy verbatim from manifest input.
+
 ## What you read
 
 Read `root_files` and their direct imports (one level deep only). Do not read beyond that scope.
