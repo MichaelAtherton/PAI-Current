@@ -2,6 +2,7 @@
 
 **Input:** repo root path (or package root for monorepo packages)  
 **Agent:** `feature-dev:code-explorer` — one instance, one pass  
+**Fallback:** If `feature-dev:code-explorer` is not available, perform the discovery yourself using the Read and Glob tools directly, following the same scope constraints defined below.
 **Output:** 
 - `output/repo-context/.manifest.json` (working artifact, not committed)
 - `output/repo-context/CONTEXT.md` (shell — frontmatter + stack + entry points + Do not assume seeds)
@@ -71,6 +72,7 @@ Write the manifest to `output/repo-context/.manifest.json`:
 
 After producing the manifest, write the CONTEXT.md shell using `templates/CONTEXT.md.template`. Fill in:
 - Frontmatter: `repo`, `generated_at` (current ISO timestamp), `git_hash` (run `git rev-parse --short HEAD`), `repo_type` (from Phase 0 output), `stack` (array)
+  - If `git rev-parse --short HEAD` fails (target is not a git repository), set `git_hash` to `"non-git"`.
 - `## Stack` section: technologies with versions
 - `## Entry points` section: file:line references
 - `## Do not assume` section: populate from `do_not_assume_seeds`
