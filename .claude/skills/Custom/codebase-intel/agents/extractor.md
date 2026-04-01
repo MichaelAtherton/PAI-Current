@@ -79,7 +79,7 @@ Run through this checklist before writing the output file:
 - [ ] Every code snippet exists verbatim in the source at the referenced file:line
 - [ ] `do_not_assume` has >=2 entries, each grounded in source evidence with a file:line ref
 - [ ] All frontmatter array fields are YAML arrays (not comma-separated strings)
-- [ ] No sentence in the body lacks a file:line reference
+- [ ] Every substantive claim (actor responsibility, interface definition, pattern description, gotcha) has a file:line reference — connective prose between referenced steps in data flow traces is exempt
 - [ ] `## Cross-cutting injection points` section is present only if `is_cross_cutting: true`
 
 ## Output
