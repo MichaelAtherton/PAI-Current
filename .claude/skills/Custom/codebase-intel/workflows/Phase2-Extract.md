@@ -10,7 +10,11 @@ For monorepo packages: all paths are under `output/repo-context/<package-name>/`
 
 ## Step 1: Read the manifest
 
-Read `output/repo-context/.manifest.json`. Extract the `subsystems` array.
+Determine the manifest path based on repo type from Phase 0:
+- **Single repo:** `output/repo-context/.manifest.json`
+- **Monorepo package:** `output/repo-context/<package-name>/.manifest.json` (where `<package-name>` is the package name passed from Phase 0)
+
+Read the manifest file at the correct path. Extract the `subsystems` array. All output paths in subsequent steps use the same base directory as the manifest (i.e., `output/repo-context/` for single repo, `output/repo-context/<package-name>/` for monorepo packages).
 
 ## Step 2: Spawn parallel extractor agents
 
