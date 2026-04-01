@@ -1,0 +1,41 @@
+---
+repo: {{REPO_NAME}}
+generated_at: {{ISO_TIMESTAMP}}
+git_hash: {{GIT_HASH}}
+repo_type: {{REPO_TYPE}}
+stack: {{STACK_ARRAY}}
+---
+
+## You are reading a repo context pack
+
+Before writing any code in this repository:
+1. Read this entire file — it takes ~2 minutes
+2. Use the subsystem index below to identify which files your task touches
+3. Load those subsystem files before writing a single line
+4. Re-read "Do not assume" after loading subsystem files
+
+Optional PAI skills that pair well with this context pack:
+- `feature-dev:code-explorer` — deeper investigation of a specific subsystem
+- `Thinking/IterativeDepth` — reasoning through architectural decisions in this codebase
+
+## Stack
+
+{{STACK_DETAIL}}
+
+## Entry points
+
+{{ENTRY_POINTS}}
+
+## Subsystem index
+
+| File | Owns | Read when |
+|------|------|-----------|
+{{SUBSYSTEM_TABLE_ROWS}}
+
+## Cross-cutting concerns
+
+{{CROSS_CUTTING_CONCERNS}}
+
+## Do not assume
+
+{{DO_NOT_ASSUME_LIST}}
