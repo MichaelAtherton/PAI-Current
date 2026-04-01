@@ -21,6 +21,8 @@ Optional PAI skills that pair well with this context pack:
 ## Stack
 
 {{STACK_DETAIL}}
+<!-- STACK_ARRAY: comma-separated technology names for frontmatter (e.g., ["TypeScript","Next.js","Prisma"]) -->
+<!-- STACK_DETAIL: prose with versions for the body (e.g., "TypeScript 5.2, Next.js 14.1 (App Router), Prisma 5.8, PostgreSQL 16") -->
 
 ## Entry points
 
