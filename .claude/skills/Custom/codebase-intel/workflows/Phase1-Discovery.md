@@ -17,7 +17,11 @@ Give the `feature-dev:code-explorer` agent these specific instructions:
 > 1. README.md (or README.rst, README.txt)
 > 2. Package manifest: package.json / go.mod / pyproject.toml / Cargo.toml — whichever is present
 > 3. Main entry point(s) — look for: `main.ts`, `index.ts`, `app.ts`, `server.ts`, `src/main.*`, `src/index.*`, or the `main` field in package.json
-> 4. One level of imports from each entry point — follow import statements one level deep to identify which modules are directly depended on by the entry point
+> 4. One level of imports from each entry point — follow import statements one level deep. Edge cases:
+>    - **Barrel/index files** (files that only re-export from other modules): treat the barrel as the boundary — do not follow through it. The barrel itself is the subsystem entry point.
+>    - **Dynamic imports** (`import()`, `require()`): note them as entry points but do not follow them — they represent runtime boundaries.
+>    - **Circular imports**: stop at the first file already visited. Do not loop.
+>    - **Third-party imports** (node_modules, external packages): do not follow. Record the package name as a stack dependency only.
 
 **Do NOT** infer subsystem names from directory names alone. Subsystem boundaries must be derived from actual import relationships and code responsibilities.
 
