@@ -48,30 +48,15 @@ The main divergence: we're hitting the raw GraphQL API via user token, while can
 
 ### 3. Iterator Back-Edges (`sourceConnectionOptions`)
 
-**Ours:**
-```python
-edge(vid, upd_ai_id, iter_id, "UPD_AI→ITER (back-edge)")
-# Creates edge with just source+target, no connection options
-```
+**Initial hypothesis (WRONG):** Apply `sourceConnectionOptions: { connectedStepType: "ITERATOR", settings: { isConnectedToLoop: true } }` to back-edges going TO the iterator.
 
-**Canonical:**
-```json
-{
-  "workflowVersionId": "...",
-  "source": "upd_ai_id",
-  "target": "iter_id",
-  "sourceConnectionOptions": {
-    "connectedStepType": "ITERATOR",
-    "settings": { "isConnectedToLoop": true }
-  }
-}
-```
+**Empirical result:** Twenty rejects this with `"Source step '...' is not an iterator"`. The field applies when the SOURCE is an Iterator (edges going FROM the iterator INTO its loop body), not when the TARGET is an Iterator.
 
-**Verdict: ⚠️ POTENTIALLY DIFFERENT.** Our back-edges work in practice (verified — 235 people processed with Iterator re-entry). But the canonical schema has a dedicated field for "this edge re-enters an iterator loop." We're not setting it.
+**Corrected verdict: ✅ CANONICAL AS-IS.** Our back-edges use plain `source + target` and that is the canonical pattern. The schema description "Optional connection options for iterator steps" is ambiguous but the runtime check is decisive — `connectedStepType: "ITERATOR"` describes the source, not the target.
 
-**Hypothesis:** The `isConnectedToLoop` flag may be used by the frontend for visual rendering (dashed line vs solid), or by validation. Since the Iterator's `initialLoopStepIds` in its own settings is what the executor reads to drive iteration, the back-edge's purpose is mostly graph completion for the traverser. Our back-edges work because `getAllStepIdsInLoop` reads both `nextStepIds` forward AND detects edges pointing back to the iterator via `connectsBackToIterator` check.
+**Where `sourceConnectionOptions` DOES apply:** Edges where the source is an Iterator step. Our `make_step(..., iter_id, "loop")` call passes `parentStepConnectionOptions: { type: "loop" }` during step creation — that's the equivalent operation for the create_workflow_version_step path. When creating an explicit edge FROM an iterator, the create_workflow_version_edge tool would take `sourceConnectionOptions`. We don't do that directly because `parentStepId` in step creation handles it.
 
-**Action:** Add `sourceConnectionOptions` to our back-edge calls for safety/canonical-correctness. Low risk. Test and confirm nothing breaks.
+**Action:** Keep back-edges as plain `edge(src, tgt)`. Added code comment documenting this finding.
 
 ---
 

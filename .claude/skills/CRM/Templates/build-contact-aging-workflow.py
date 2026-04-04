@@ -44,7 +44,7 @@ import json, subprocess, os, time, sys
 BASE = "http://localhost:3030"
 API_KEY = os.environ.get("TWENTY_API_KEY", "")
 AGENT_ID = "5cea09b4-3875-4d14-b9a4-7b4265faa5dc"  # Email Relationship Analyzer
-LIMIT = 500  # Production. Requires Iterator history patch on worker (history: []).
+LIMIT = 2  # Smoke test. Set to 500 for production (requires Iterator history patch on worker).
 
 
 # ── Helpers ──────────────────────────────────────────
@@ -110,11 +110,83 @@ def cfg(vid, step):
         print(f"  ✓ {d['updateWorkflowVersionStep']['name']}")
     return d is not None
 
-def edge(vid, src, tgt):
-    """Connect two steps. Call AFTER all cfg() calls."""
+def edge(vid, src, tgt, from_iterator_to_loop=False):
+    """Connect two steps. Call AFTER all cfg() calls.
+
+    When from_iterator_to_loop=True, passes sourceConnectionOptions per the
+    canonical MCP schema — this field applies when SOURCE is an Iterator and
+    the edge is entering its loop body (not for back-edges TO an iterator).
+
+    Verified empirically: passing sourceConnectionOptions with a non-iterator
+    source step fails with "Source step ... is not an iterator." Back-edges
+    from UPDATE_RECORD → ITERATOR should NOT set this field.
+    """
+    inp = {"workflowVersionId": vid, "source": src, "target": tgt}
+    if from_iterator_to_loop:
+        inp["sourceConnectionOptions"] = {
+            "connectedStepType": "ITERATOR",
+            "settings": {"isConnectedToLoop": True}
+        }
     d = gql("mutation($i:CreateWorkflowVersionEdgeInput!){createWorkflowVersionEdge(input:$i){stepsDiff}}",
-        {"i": {"workflowVersionId": vid, "source": src, "target": tgt}})
+        {"i": inp})
     return d is not None
+
+def verify_graph(vid, iterator_ids=None):
+    """Post-Phase-3 graph verification — catches missing edges before runtime.
+
+    Asserts:
+    - Every non-IF_ELSE, non-UPDATE/DELETE-terminal step has nextStepIds
+    - Every IF_ELSE has both branches with nextStepIds populated
+    - Every Iterator has initialLoopStepIds AND at least one back-edge
+
+    Returns: (ok: bool, errors: list[str])
+    """
+    iterator_ids = iterator_ids or []
+    node = get_node(vid)
+    steps = node["steps"]
+    by_id = {s["id"]: s for s in steps}
+    errors = []
+
+    # Steps that legitimately have no nextStepIds: loop terminal steps (back-edge targets)
+    # and EMPTY placeholders. Everything else should have edges.
+    for s in steps:
+        sid = s["id"]
+        name = s["name"]
+        stype = s["type"]
+        nxt = s.get("nextStepIds") or []
+
+        if stype == "EMPTY":
+            continue
+
+        if stype == "IF_ELSE":
+            branches = s.get("settings", {}).get("input", {}).get("branches", [])
+            if len(branches) < 2:
+                errors.append(f"IF_ELSE '{name}' has {len(branches)} branches, expected 2")
+                continue
+            for i, b in enumerate(branches):
+                bname = "TRUE" if i == 0 else "FALSE"
+                if not b.get("nextStepIds"):
+                    errors.append(f"IF_ELSE '{name}' {bname} branch has empty nextStepIds")
+            continue
+
+        if stype == "ITERATOR":
+            init = s.get("settings", {}).get("input", {}).get("initialLoopStepIds") or []
+            if not init:
+                errors.append(f"Iterator '{name}' has empty initialLoopStepIds")
+            # Check at least one back-edge exists (some step points at this iterator)
+            back_edges = [other for other in steps
+                          if sid in (other.get("nextStepIds") or [])
+                          and other["id"] != s.get("parentStepId", "")]
+            if not back_edges:
+                errors.append(f"Iterator '{name}' has no back-edges from loop body")
+            continue
+
+        # Regular step — must have nextStepIds unless it's terminal in a loop
+        # (points back to its enclosing iterator)
+        if not nxt:
+            errors.append(f"Step '{name}' ({stype}) has empty nextStepIds — missing forward edge?")
+
+    return (len(errors) == 0, errors)
 
 def get_node(vid):
     """Get version's steps and trigger."""
@@ -389,21 +461,35 @@ cfg(vid, {"id": upd_noemail_id, "name": "Update Person (No Email)", "type": "UPD
 
 
 # ═══ PHASE 3: ADD EDGES LAST ═══
+# NOTE: edges are a separate concern from step config. cfg() does not manage
+# nextStepIds — use createWorkflowVersionEdge (via edge()) for every forward
+# connection. See .claude/skills/CRM/References/CanonicalVsOurs.md.
 print("\n── Phase 3: Add edges ──")
-for src, tgt, label in [
+# Forward edges (src, tgt, label) — back_to_iterator defaults to False
+forward_edges = [
     (find_id, iter_id, "FIND→ITER"),
-    # cfg() wipes nextStepIds — these edges MUST be re-added after Phase 2:
     (find_msg_id, if_email_id, "FIND_MSG→IF_EMAIL"),
     (find_det_id, code_id, "FIND_DET→CODE"),
     (code_id, if_prio_id, "CODE→IF_PRIO"),
     (ai_id, parse_ai_id, "AI→PARSE_AI"),
     (parse_ai_id, upd_ai_id, "PARSE_AI→UPD_AI"),
     (code_noemail_id, upd_noemail_id, "CODE_NOEMAIL→UPD_NOEMAIL"),
-    # Back-edges: 3 terminal loop steps → Iterator (required for re-entry)
+]
+# Back-edges: 3 terminal loop steps → Iterator. Canonical schema requires
+# sourceConnectionOptions.isConnectedToLoop=true (set via back_to_iterator flag).
+back_edges = [
     (upd_ai_id, iter_id, "UPD_AI→ITER (back-edge)"),
     (upd_basic_id, iter_id, "UPD_BASIC→ITER (back-edge)"),
     (upd_noemail_id, iter_id, "UPD_NOEMAIL→ITER (back-edge)"),
-]:
+]
+for src, tgt, label in forward_edges:
+    ok = edge(vid, src, tgt)
+    print(f"  {'✓' if ok else '⚠'} {label}")
+for src, tgt, label in back_edges:
+    # NOTE: sourceConnectionOptions is NOT for back-edges. The source of a
+    # back-edge is UPDATE_RECORD, not ITERATOR, and Twenty rejects the payload
+    # with "Source step ... is not an iterator." Back-edges work via plain
+    # source+target — the Iterator's initialLoopStepIds drives re-entry.
     ok = edge(vid, src, tgt)
     print(f"  {'✓' if ok else '⚠'} {label}")
 
@@ -414,6 +500,24 @@ print(f"  ✓ Trigger→FIND")
 
 
 # ═══ PHASE 4: CLEANUP + ACTIVATE ═══
+# ═══ PHASE 3.5: GRAPH VERIFICATION ═══
+# Catches missing edges (Bug 6 class) BEFORE runtime. See CanonicalVsOurs.md.
+print("\n── Phase 3.5: Graph verification ──")
+ok, errors = verify_graph(vid)
+if ok:
+    print("  ✓ Graph structure valid")
+else:
+    print(f"  ⚠ {len(errors)} graph errors:")
+    for e in errors:
+        print(f"    - {e}")
+    print("\n  ABORTING — fix errors above before activation. EMPTY steps will be cleaned up in Phase 4 so they are ignored here.")
+    # Filter out errors that are just about EMPTY placeholders that will be cleaned up
+    real_errors = [e for e in errors if "EMPTY" not in e]
+    if real_errors:
+        sys.exit(1)
+    print("  (Above errors are EMPTY placeholders — Phase 4 will clean them up.)")
+
+
 print("\n── Phase 4: Cleanup + Activate ──")
 node = get_node(vid)
 for s in node["steps"]:
