@@ -1,0 +1,997 @@
+{
+  "backup_metadata": {
+    "backup_timestamp": "2026-04-04T15:39:55Z",
+    "twenty_base": "http://localhost:3030",
+    "backup_script_version": "1.0"
+  },
+  "workflow": {
+    "id": "90f1d148-cd10-419a-895c-d8edaa86e9c4",
+    "name": "Contact Aging Analysis",
+    "statuses": [
+      "ACTIVE"
+    ],
+    "createdAt": "2026-04-04T08:34:35.412Z",
+    "updatedAt": "2026-04-04T08:34:40.475Z"
+  },
+  "versions": [
+    {
+      "id": "026241a6-c259-4b72-a52f-967a9bbcfb7c",
+      "status": "ACTIVE",
+      "createdAt": "2026-04-04T08:34:35.420Z",
+      "updatedAt": "2026-04-04T08:34:40.464Z",
+      "steps": [
+        {
+          "id": "28712b30-988f-42a8-a8fd-0ec70795a4ce",
+          "name": "Find Unprocessed People",
+          "type": "FIND_RECORDS",
+          "valid": true,
+          "settings": {
+            "input": {
+              "limit": 500,
+              "filter": {
+                "recordFilters": [
+                  {
+                    "id": "f-find-1",
+                    "value": "",
+                    "operand": "IS_EMPTY",
+                    "fieldMetadataId": "897f05a3-ae48-4ae9-ba32-b89515a929d5",
+                    "recordFilterGroupId": "fg-find-1"
+                  }
+                ],
+                "recordFilterGroups": [
+                  {
+                    "id": "fg-find-1",
+                    "logicalOperator": "AND"
+                  }
+                ]
+              },
+              "objectName": "person"
+            },
+            "outputSchema": {},
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": false
+              }
+            }
+          },
+          "nextStepIds": [
+            "cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1"
+          ]
+        },
+        {
+          "id": "cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1",
+          "name": "For Each Person",
+          "type": "ITERATOR",
+          "valid": true,
+          "settings": {
+            "input": {
+              "items": "{{28712b30-988f-42a8-a8fd-0ec70795a4ce.all}}",
+              "initialLoopStepIds": [
+                "3c098d81-abae-48fc-aa78-7face8369d6a"
+              ],
+              "shouldContinueOnIterationFailure": true
+            },
+            "outputSchema": {
+              "currentItem": {
+                "type": "object",
+                "label": "Current Item (Person)",
+                "value": {
+                  "fields": {
+                    "id": {
+                      "icon": "Icon123",
+                      "type": "UUID",
+                      "label": "Id",
+                      "value": "123e4567-e89b-12d3-a456-426614174000",
+                      "isLeaf": true,
+                      "fieldMetadataId": "b9c2527d-bf50-4c92-8709-606edec0b746"
+                    },
+                    "city": {
+                      "icon": "IconMap",
+                      "type": "TEXT",
+                      "label": "City",
+                      "value": "My text",
+                      "isLeaf": true,
+                      "fieldMetadataId": "9a0a33eb-ed04-464f-8766-a33fd9e125a8"
+                    },
+                    "name": {
+                      "icon": "IconUser",
+                      "type": "FULL_NAME",
+                      "label": "Name",
+                      "value": {
+                        "lastName": {
+                          "type": "TEXT",
+                          "label": "Last Name",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "ea9262c0-6b0a-410d-8f3c-7ea69b068981",
+                          "isCompositeSubField": true
+                        },
+                        "firstName": {
+                          "type": "TEXT",
+                          "label": "First Name",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "ea9262c0-6b0a-410d-8f3c-7ea69b068981",
+                          "isCompositeSubField": true
+                        }
+                      },
+                      "isLeaf": false,
+                      "fieldMetadataId": "ea9262c0-6b0a-410d-8f3c-7ea69b068981"
+                    },
+                    "xLink": {
+                      "icon": "IconBrandX",
+                      "type": "LINKS",
+                      "label": "X",
+                      "value": {
+                        "primaryLinkUrl": {
+                          "type": "TEXT",
+                          "label": "Primary Link Url",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "d155279d-e27f-48e5-a931-ddb14ab2f51f",
+                          "isCompositeSubField": true
+                        },
+                        "secondaryLinks": {
+                          "type": "RAW_JSON",
+                          "label": "Secondary Links",
+                          "value": null,
+                          "isLeaf": true,
+                          "fieldMetadataId": "d155279d-e27f-48e5-a931-ddb14ab2f51f",
+                          "isCompositeSubField": true
+                        },
+                        "primaryLinkLabel": {
+                          "type": "TEXT",
+                          "label": "Primary Link Label",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "d155279d-e27f-48e5-a931-ddb14ab2f51f",
+                          "isCompositeSubField": true
+                        }
+                      },
+                      "isLeaf": false,
+                      "fieldMetadataId": "d155279d-e27f-48e5-a931-ddb14ab2f51f"
+                    },
+                    "emails": {
+                      "icon": "IconMail",
+                      "type": "EMAILS",
+                      "label": "Emails",
+                      "value": {
+                        "primaryEmail": {
+                          "type": "TEXT",
+                          "label": "Primary Email",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "c1a80898-abee-4c8e-968c-b243dd5669dd",
+                          "isCompositeSubField": true
+                        },
+                        "additionalEmails": {
+                          "type": "RAW_JSON",
+                          "label": "Additional Emails",
+                          "value": null,
+                          "isLeaf": true,
+                          "fieldMetadataId": "c1a80898-abee-4c8e-968c-b243dd5669dd",
+                          "isCompositeSubField": true
+                        }
+                      },
+                      "isLeaf": false,
+                      "fieldMetadataId": "c1a80898-abee-4c8e-968c-b243dd5669dd"
+                    },
+                    "phones": {
+                      "icon": "IconPhone",
+                      "type": "PHONES",
+                      "label": "Phones",
+                      "value": {
+                        "additionalPhones": {
+                          "type": "RAW_JSON",
+                          "label": "Additional Phones",
+                          "value": null,
+                          "isLeaf": true,
+                          "fieldMetadataId": "6cc1dd13-5fa4-4534-815a-fde8e3738f7b",
+                          "isCompositeSubField": true
+                        },
+                        "primaryPhoneNumber": {
+                          "type": "TEXT",
+                          "label": "Primary Phone Number",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "6cc1dd13-5fa4-4534-815a-fde8e3738f7b",
+                          "isCompositeSubField": true
+                        },
+                        "primaryPhoneCallingCode": {
+                          "type": "TEXT",
+                          "label": "Primary Phone Calling Code",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "6cc1dd13-5fa4-4534-815a-fde8e3738f7b",
+                          "isCompositeSubField": true
+                        },
+                        "primaryPhoneCountryCode": {
+                          "type": "TEXT",
+                          "label": "Primary Phone Country Code",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "6cc1dd13-5fa4-4534-815a-fde8e3738f7b",
+                          "isCompositeSubField": true
+                        }
+                      },
+                      "isLeaf": false,
+                      "fieldMetadataId": "6cc1dd13-5fa4-4534-815a-fde8e3738f7b"
+                    },
+                    "jobTitle": {
+                      "icon": "IconBriefcase",
+                      "type": "TEXT",
+                      "label": "Job Title",
+                      "value": "My text",
+                      "isLeaf": true,
+                      "fieldMetadataId": "717169ad-4eb0-4070-9249-38afaa1fb2e6"
+                    },
+                    "aiSummary": {
+                      "type": "TEXT",
+                      "label": "AI Summary",
+                      "value": "My text",
+                      "isLeaf": true,
+                      "fieldMetadataId": "e208bb16-2493-4c83-91c7-2a12b4145788"
+                    },
+                    "avatarUrl": {
+                      "icon": "IconFileUpload",
+                      "type": "TEXT",
+                      "label": "Avatar",
+                      "value": "My text",
+                      "isLeaf": true,
+                      "fieldMetadataId": "52651735-27a3-4c85-a91b-7027bc4b1472"
+                    },
+                    "companyId": {
+                      "icon": "IconBuildingSkyscraper",
+                      "type": "UUID",
+                      "label": "Company Id",
+                      "value": "123e4567-e89b-12d3-a456-426614174000",
+                      "isLeaf": true,
+                      "fieldMetadataId": "b33c3da6-db9c-413a-89a2-037313f3efc7"
+                    },
+                    "createdAt": {
+                      "icon": "IconCalendar",
+                      "type": "DATE_TIME",
+                      "label": "Creation date",
+                      "value": "01/23/2025 15:16",
+                      "isLeaf": true,
+                      "fieldMetadataId": "dce52f66-7eb3-44e2-88b3-b30bc554c2ab"
+                    },
+                    "createdBy": {
+                      "icon": "IconCreativeCommonsSa",
+                      "type": "ACTOR",
+                      "label": "Created by",
+                      "value": {
+                        "name": {
+                          "type": "TEXT",
+                          "label": "Name",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "671ee970-649d-4d8f-8184-2de27fe8aebb",
+                          "isCompositeSubField": true
+                        },
+                        "source": {
+                          "type": "SELECT",
+                          "label": "Source",
+                          "value": null,
+                          "isLeaf": true,
+                          "fieldMetadataId": "671ee970-649d-4d8f-8184-2de27fe8aebb",
+                          "isCompositeSubField": true
+                        },
+                        "context": {
+                          "type": "RAW_JSON",
+                          "label": "Context",
+                          "value": null,
+                          "isLeaf": true,
+                          "fieldMetadataId": "671ee970-649d-4d8f-8184-2de27fe8aebb",
+                          "isCompositeSubField": true
+                        },
+                        "workspaceMemberId": {
+                          "type": "UUID",
+                          "label": "Workspace Member Id",
+                          "value": "123e4567-e89b-12d3-a456-426614174000",
+                          "isLeaf": true,
+                          "fieldMetadataId": "671ee970-649d-4d8f-8184-2de27fe8aebb",
+                          "isCompositeSubField": true
+                        }
+                      },
+                      "isLeaf": false,
+                      "fieldMetadataId": "671ee970-649d-4d8f-8184-2de27fe8aebb"
+                    },
+                    "deletedAt": {
+                      "icon": "IconCalendarMinus",
+                      "type": "DATE_TIME",
+                      "label": "Deleted at",
+                      "value": "01/23/2025 15:16",
+                      "isLeaf": true,
+                      "fieldMetadataId": "672a7168-c064-411a-b7e6-2812492ef4a8"
+                    },
+                    "updatedAt": {
+                      "icon": "IconCalendarClock",
+                      "type": "DATE_TIME",
+                      "label": "Last update",
+                      "value": "01/23/2025 15:16",
+                      "isLeaf": true,
+                      "fieldMetadataId": "a877684d-58db-4abf-8623-5101faab632a"
+                    },
+                    "updatedBy": {
+                      "icon": "IconUserCircle",
+                      "type": "ACTOR",
+                      "label": "Updated by",
+                      "value": {
+                        "name": {
+                          "type": "TEXT",
+                          "label": "Name",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "042df13a-10db-41b5-ad5d-604749437776",
+                          "isCompositeSubField": true
+                        },
+                        "source": {
+                          "type": "SELECT",
+                          "label": "Source",
+                          "value": null,
+                          "isLeaf": true,
+                          "fieldMetadataId": "042df13a-10db-41b5-ad5d-604749437776",
+                          "isCompositeSubField": true
+                        },
+                        "context": {
+                          "type": "RAW_JSON",
+                          "label": "Context",
+                          "value": null,
+                          "isLeaf": true,
+                          "fieldMetadataId": "042df13a-10db-41b5-ad5d-604749437776",
+                          "isCompositeSubField": true
+                        },
+                        "workspaceMemberId": {
+                          "type": "UUID",
+                          "label": "Workspace Member Id",
+                          "value": "123e4567-e89b-12d3-a456-426614174000",
+                          "isLeaf": true,
+                          "fieldMetadataId": "042df13a-10db-41b5-ad5d-604749437776",
+                          "isCompositeSubField": true
+                        }
+                      },
+                      "isLeaf": false,
+                      "fieldMetadataId": "042df13a-10db-41b5-ad5d-604749437776"
+                    },
+                    "avatarFile": {
+                      "icon": "IconFileUpload",
+                      "type": "FILES",
+                      "label": "Avatar File",
+                      "value": null,
+                      "isLeaf": true,
+                      "fieldMetadataId": "cb3bc993-bedf-47a1-bf58-f1a32ff8096e"
+                    },
+                    "linkedinLink": {
+                      "icon": "IconBrandLinkedin",
+                      "type": "LINKS",
+                      "label": "Linkedin",
+                      "value": {
+                        "primaryLinkUrl": {
+                          "type": "TEXT",
+                          "label": "Primary Link Url",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "edd63d4d-0de9-4a34-acda-798f0a87bcda",
+                          "isCompositeSubField": true
+                        },
+                        "secondaryLinks": {
+                          "type": "RAW_JSON",
+                          "label": "Secondary Links",
+                          "value": null,
+                          "isLeaf": true,
+                          "fieldMetadataId": "edd63d4d-0de9-4a34-acda-798f0a87bcda",
+                          "isCompositeSubField": true
+                        },
+                        "primaryLinkLabel": {
+                          "type": "TEXT",
+                          "label": "Primary Link Label",
+                          "value": "My text",
+                          "isLeaf": true,
+                          "fieldMetadataId": "edd63d4d-0de9-4a34-acda-798f0a87bcda",
+                          "isCompositeSubField": true
+                        }
+                      },
+                      "isLeaf": false,
+                      "fieldMetadataId": "edd63d4d-0de9-4a34-acda-798f0a87bcda"
+                    },
+                    "contactPriority": {
+                      "type": "SELECT",
+                      "label": "Contact Priority",
+                      "value": null,
+                      "isLeaf": true,
+                      "fieldMetadataId": "897f05a3-ae48-4ae9-ba32-b89515a929d5"
+                    },
+                    "lastContactDate": {
+                      "type": "DATE_TIME",
+                      "label": "Last Contact Date",
+                      "value": "01/23/2025 15:16",
+                      "isLeaf": true,
+                      "fieldMetadataId": "6babc91f-791a-4897-9105-d9c00afd9edc"
+                    },
+                    "lastContactDays": {
+                      "type": "NUMBER",
+                      "label": "Last Contact Days",
+                      "value": 20,
+                      "isLeaf": true,
+                      "fieldMetadataId": "e7c1816c-0652-46a8-8429-467bbc203389"
+                    },
+                    "relationshipStatus": {
+                      "type": "SELECT",
+                      "label": "Relationship Status",
+                      "value": null,
+                      "isLeaf": true,
+                      "fieldMetadataId": "c4f1a9ea-bf92-4ffa-8d90-eb4704b6ac83"
+                    }
+                  },
+                  "object": {
+                    "icon": "IconUser",
+                    "label": "Person",
+                    "value": "A person",
+                    "isLeaf": true,
+                    "fieldIdName": "id",
+                    "objectMetadataId": "49c73c7a-bc74-4da3-aa0b-f9423e92ad3e"
+                  },
+                  "_outputSchemaType": "RECORD"
+                },
+                "isLeaf": false
+              },
+              "currentItemIndex": {
+                "type": "number",
+                "label": "Current Item Index",
+                "value": 20,
+                "isLeaf": true
+              },
+              "hasProcessedAllItems": {
+                "type": "boolean",
+                "label": "Has Processed All Items",
+                "value": false,
+                "isLeaf": true
+              }
+            },
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": true
+              }
+            }
+          }
+        },
+        {
+          "id": "3c098d81-abae-48fc-aa78-7face8369d6a",
+          "name": "Find Messages",
+          "type": "FIND_RECORDS",
+          "valid": true,
+          "settings": {
+            "input": {
+              "limit": 1,
+              "filter": {
+                "recordFilters": [
+                  {
+                    "id": "f-msg-1",
+                    "value": "{{cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1.currentItem.id}}",
+                    "operand": "IS",
+                    "fieldMetadataId": "d19518ca-854c-4160-9e03-fee564cea05b",
+                    "recordFilterGroupId": "fg-msg-1"
+                  }
+                ],
+                "recordFilterGroups": [
+                  {
+                    "id": "fg-msg-1",
+                    "logicalOperator": "AND"
+                  }
+                ]
+              },
+              "orderBy": {
+                "gqlOperationOrderBy": [
+                  {
+                    "createdAt": "DescNullsLast"
+                  }
+                ]
+              },
+              "objectName": "messageParticipant"
+            },
+            "outputSchema": {},
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": true
+              }
+            }
+          },
+          "nextStepIds": [
+            "1c0b6df0-fc38-4425-9017-8ec0c3cbcd8a"
+          ]
+        },
+        {
+          "id": "1c0b6df0-fc38-4425-9017-8ec0c3cbcd8a",
+          "name": "Has Email?",
+          "type": "IF_ELSE",
+          "valid": true,
+          "settings": {
+            "input": {
+              "branches": [
+                {
+                  "id": "b6126b75-019f-41fb-908f-5266b7fb4c59",
+                  "nextStepIds": [
+                    "7e5292c7-b0c6-4705-a63a-76317c4088e4"
+                  ],
+                  "filterGroupId": "6dc18981-36ee-40bd-a29a-03615ce18332"
+                },
+                {
+                  "id": "5cde083d-798b-4898-b158-9b0cb9ecb2d3",
+                  "nextStepIds": [
+                    "632453f7-6f1f-4ac9-b3a3-bfe817c8a219"
+                  ]
+                }
+              ],
+              "stepFilters": [
+                {
+                  "id": "f-email-1",
+                  "type": "number",
+                  "value": "1",
+                  "operand": "GREATER_THAN_OR_EQUAL",
+                  "stepOutputKey": "{{3c098d81-abae-48fc-aa78-7face8369d6a.totalCount}}",
+                  "stepFilterGroupId": "6dc18981-36ee-40bd-a29a-03615ce18332",
+                  "positionInStepFilterGroup": 0
+                }
+              ],
+              "stepFilterGroups": [
+                {
+                  "id": "6dc18981-36ee-40bd-a29a-03615ce18332",
+                  "logicalOperator": "AND"
+                }
+              ]
+            },
+            "outputSchema": {},
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": false
+              }
+            }
+          }
+        },
+        {
+          "id": "7e5292c7-b0c6-4705-a63a-76317c4088e4",
+          "name": "Get Message Detail",
+          "type": "FIND_RECORDS",
+          "valid": true,
+          "settings": {
+            "input": {
+              "limit": 1,
+              "filter": {
+                "recordFilters": [
+                  {
+                    "id": "f-det-1",
+                    "value": "{{3c098d81-abae-48fc-aa78-7face8369d6a.first.messageId}}",
+                    "operand": "IS",
+                    "fieldMetadataId": "ae62024e-6bf1-4a05-b674-26ea1c39f06e",
+                    "recordFilterGroupId": "fg-det-1"
+                  }
+                ],
+                "recordFilterGroups": [
+                  {
+                    "id": "fg-det-1",
+                    "logicalOperator": "AND"
+                  }
+                ]
+              },
+              "objectName": "message"
+            },
+            "outputSchema": {},
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": true
+              }
+            }
+          },
+          "nextStepIds": [
+            "de092d9f-41a0-4439-9a7b-49c242e707c6"
+          ]
+        },
+        {
+          "id": "de092d9f-41a0-4439-9a7b-49c242e707c6",
+          "name": "Compute Priority",
+          "type": "CODE",
+          "valid": true,
+          "settings": {
+            "input": {
+              "logicFunctionId": "d0b228d8-db95-43c8-ba24-4886c2b6b94c",
+              "logicFunctionInput": {
+                "person": "{{cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1.currentItem}}",
+                "latestMessage": "{{7e5292c7-b0c6-4705-a63a-76317c4088e4.first}}"
+              }
+            },
+            "outputSchema": {
+              "dealInfo": {
+                "type": "TEXT",
+                "label": "dealInfo",
+                "value": "",
+                "isLeaf": true
+              },
+              "emailBody": {
+                "type": "TEXT",
+                "label": "emailBody",
+                "value": "",
+                "isLeaf": true
+              },
+              "emailSubject": {
+                "type": "TEXT",
+                "label": "emailSubject",
+                "value": "",
+                "isLeaf": true
+              },
+              "shouldAnalyze": {
+                "type": "BOOLEAN",
+                "label": "shouldAnalyze",
+                "value": true,
+                "isLeaf": true
+              },
+              "emailDirection": {
+                "type": "TEXT",
+                "label": "emailDirection",
+                "value": "",
+                "isLeaf": true
+              },
+              "contactPriority": {
+                "type": "TEXT",
+                "label": "contactPriority",
+                "value": "HIGH",
+                "isLeaf": true
+              },
+              "lastContactDate": {
+                "type": "DATE_TIME",
+                "label": "lastContactDate",
+                "value": "2025-01-01T00:00:00.000Z",
+                "isLeaf": true
+              },
+              "lastContactDays": {
+                "type": "NUMBER",
+                "label": "lastContactDays",
+                "value": 0,
+                "isLeaf": true
+              }
+            },
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": true
+              }
+            }
+          },
+          "nextStepIds": [
+            "fd036f4b-0273-413e-aeb5-c978fe59082e"
+          ]
+        },
+        {
+          "id": "fd036f4b-0273-413e-aeb5-c978fe59082e",
+          "name": "Is HIGH or MEDIUM?",
+          "type": "IF_ELSE",
+          "valid": true,
+          "settings": {
+            "input": {
+              "branches": [
+                {
+                  "id": "b771fab7-1bf1-4982-8479-5ff71b42bab0",
+                  "nextStepIds": [
+                    "76e5ee7d-4f49-420e-8d12-2fcaf8cd9c90"
+                  ],
+                  "filterGroupId": "6c40501a-293d-4836-bd0d-df1943e9b40f"
+                },
+                {
+                  "id": "96641540-d929-4a24-bc13-5c429b351985",
+                  "nextStepIds": [
+                    "e6d6442f-7f2b-4b26-9d2b-b547b6739d76"
+                  ]
+                }
+              ],
+              "stepFilters": [
+                {
+                  "id": "f-prio-1",
+                  "type": "boolean",
+                  "value": "true",
+                  "operand": "IS",
+                  "stepOutputKey": "{{de092d9f-41a0-4439-9a7b-49c242e707c6.shouldAnalyze}}",
+                  "stepFilterGroupId": "6c40501a-293d-4836-bd0d-df1943e9b40f",
+                  "positionInStepFilterGroup": 0
+                }
+              ],
+              "stepFilterGroups": [
+                {
+                  "id": "6c40501a-293d-4836-bd0d-df1943e9b40f",
+                  "logicalOperator": "AND"
+                }
+              ]
+            },
+            "outputSchema": {},
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": false
+              }
+            }
+          }
+        },
+        {
+          "id": "76e5ee7d-4f49-420e-8d12-2fcaf8cd9c90",
+          "name": "Analyze Relationship",
+          "type": "AI_AGENT",
+          "valid": true,
+          "settings": {
+            "input": {
+              "prompt": "You are a CRM relationship analyst. Analyze this contact's most recent email and determine their relationship status.\\n\\nCONTACT: {{cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1.currentItem.name.firstName}} {{cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1.currentItem.name.lastName}}\\nCOMPANY: {{cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1.currentItem.companyId}}\\nDAYS SINCE LAST EMAIL: {{de092d9f-41a0-4439-9a7b-49c242e707c6.lastContactDays}}\\nEMAIL DIRECTION: {{de092d9f-41a0-4439-9a7b-49c242e707c6.emailDirection}}\\nEMAIL SUBJECT: {{de092d9f-41a0-4439-9a7b-49c242e707c6.emailSubject}}\\nEMAIL BODY:\\n{{de092d9f-41a0-4439-9a7b-49c242e707c6.emailBody}}\\n\\nCLASSIFICATION RULES:\\n- ACTIVE: Engaged conversation within 30 days. Back-and-forth exchanges, meeting scheduling, project discussions, warm tone.\\n- COOLING: Was active but slowing down. 30-90 days since contact, or last email was a brief reply with no follow-up.\\n- AT_RISK: 90-180 days since contact, or last email shows disengagement (short replies, declined meetings, unsubscribe-like language).\\n- COLD: 180-365 days since contact. No meaningful engagement in the email content.\\n- DEAD: Over 365 days, OR email is automated/marketing/unsubscribe, OR no email found.\\n\\nRespond with ONLY valid JSON, no other text:\\n{\"relationshipStatus\": \"ACTIVE|COOLING|AT_RISK|COLD|DEAD\", \"aiSummary\": \"one sentence explaining your reasoning based on the email content\", \"confidence\": 0-100}",
+              "agentId": "5cea09b4-3875-4d14-b9a4-7b4265faa5dc"
+            },
+            "outputSchema": {},
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": true
+              }
+            }
+          },
+          "nextStepIds": [
+            "27ade460-75ce-4489-b0bb-a48222086ce7"
+          ]
+        },
+        {
+          "id": "27ade460-75ce-4489-b0bb-a48222086ce7",
+          "name": "Parse AI Response",
+          "type": "CODE",
+          "valid": true,
+          "settings": {
+            "input": {
+              "logicFunctionId": "aad13f4a-fabf-4d53-9793-b5db344e6691",
+              "logicFunctionInput": {
+                "aiResponse": "{{76e5ee7d-4f49-420e-8d12-2fcaf8cd9c90.response}}"
+              }
+            },
+            "outputSchema": {
+              "aiSummary": {
+                "type": "TEXT",
+                "label": "aiSummary",
+                "value": "",
+                "isLeaf": true
+              },
+              "confidence": {
+                "type": "NUMBER",
+                "label": "confidence",
+                "value": 0,
+                "isLeaf": true
+              },
+              "relationshipStatus": {
+                "type": "TEXT",
+                "label": "relationshipStatus",
+                "value": "UNKNOWN",
+                "isLeaf": true
+              }
+            },
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": true
+              }
+            }
+          },
+          "nextStepIds": [
+            "d417ea3b-6a9e-4879-b5e1-6e0ed8e458d6"
+          ]
+        },
+        {
+          "id": "d417ea3b-6a9e-4879-b5e1-6e0ed8e458d6",
+          "name": "Update Person (AI)",
+          "type": "UPDATE_RECORD",
+          "valid": true,
+          "settings": {
+            "input": {
+              "objectName": "person",
+              "objectRecord": {
+                "aiSummary": "{{27ade460-75ce-4489-b0bb-a48222086ce7.aiSummary}}",
+                "contactPriority": "{{de092d9f-41a0-4439-9a7b-49c242e707c6.contactPriority}}",
+                "lastContactDate": "{{de092d9f-41a0-4439-9a7b-49c242e707c6.lastContactDate}}",
+                "lastContactDays": "{{de092d9f-41a0-4439-9a7b-49c242e707c6.lastContactDays}}",
+                "relationshipStatus": "{{27ade460-75ce-4489-b0bb-a48222086ce7.relationshipStatus}}"
+              },
+              "objectRecordId": "{{cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1.currentItem.id}}"
+            },
+            "outputSchema": {},
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": true
+              }
+            }
+          },
+          "nextStepIds": [
+            "cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1"
+          ]
+        },
+        {
+          "id": "e6d6442f-7f2b-4b26-9d2b-b547b6739d76",
+          "name": "Update Person (Basic)",
+          "type": "UPDATE_RECORD",
+          "valid": true,
+          "settings": {
+            "input": {
+              "objectName": "person",
+              "objectRecord": {
+                "contactPriority": "{{de092d9f-41a0-4439-9a7b-49c242e707c6.contactPriority}}",
+                "lastContactDate": "{{de092d9f-41a0-4439-9a7b-49c242e707c6.lastContactDate}}",
+                "lastContactDays": "{{de092d9f-41a0-4439-9a7b-49c242e707c6.lastContactDays}}"
+              },
+              "objectRecordId": "{{cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1.currentItem.id}}"
+            },
+            "outputSchema": {},
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": true
+              }
+            }
+          },
+          "nextStepIds": [
+            "cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1"
+          ]
+        },
+        {
+          "id": "632453f7-6f1f-4ac9-b3a3-bfe817c8a219",
+          "name": "Compute Priority (No Email)",
+          "type": "CODE",
+          "valid": true,
+          "settings": {
+            "input": {
+              "logicFunctionId": "a7a4a32d-184a-423f-bc54-0062e0b3c4fd",
+              "logicFunctionInput": {
+                "person": "{{cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1.currentItem}}"
+              }
+            },
+            "outputSchema": {
+              "dealInfo": {
+                "type": "TEXT",
+                "label": "dealInfo",
+                "value": "",
+                "isLeaf": true
+              },
+              "emailBody": {
+                "type": "TEXT",
+                "label": "emailBody",
+                "value": "",
+                "isLeaf": true
+              },
+              "emailSubject": {
+                "type": "TEXT",
+                "label": "emailSubject",
+                "value": "",
+                "isLeaf": true
+              },
+              "shouldAnalyze": {
+                "type": "BOOLEAN",
+                "label": "shouldAnalyze",
+                "value": true,
+                "isLeaf": true
+              },
+              "emailDirection": {
+                "type": "TEXT",
+                "label": "emailDirection",
+                "value": "",
+                "isLeaf": true
+              },
+              "contactPriority": {
+                "type": "TEXT",
+                "label": "contactPriority",
+                "value": "HIGH",
+                "isLeaf": true
+              },
+              "lastContactDate": {
+                "type": "DATE_TIME",
+                "label": "lastContactDate",
+                "value": "2025-01-01T00:00:00.000Z",
+                "isLeaf": true
+              },
+              "lastContactDays": {
+                "type": "NUMBER",
+                "label": "lastContactDays",
+                "value": 0,
+                "isLeaf": true
+              }
+            },
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": true
+              }
+            }
+          },
+          "nextStepIds": [
+            "04e30457-c455-4627-b380-e650824a31e9"
+          ]
+        },
+        {
+          "id": "04e30457-c455-4627-b380-e650824a31e9",
+          "name": "Update Person (No Email)",
+          "type": "UPDATE_RECORD",
+          "valid": true,
+          "settings": {
+            "input": {
+              "objectName": "person",
+              "objectRecord": {
+                "contactPriority": "{{632453f7-6f1f-4ac9-b3a3-bfe817c8a219.contactPriority}}",
+                "lastContactDays": "{{632453f7-6f1f-4ac9-b3a3-bfe817c8a219.lastContactDays}}"
+              },
+              "objectRecordId": "{{cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1.currentItem.id}}"
+            },
+            "outputSchema": {},
+            "errorHandlingOptions": {
+              "retryOnFailure": {
+                "value": false
+              },
+              "continueOnFailure": {
+                "value": true
+              }
+            }
+          },
+          "nextStepIds": [
+            "cd1a069d-fe80-4ac3-9d23-5a5bf32a4ba1"
+          ]
+        }
+      ],
+      "trigger": {
+        "type": "CRON",
+        "settings": {
+          "type": "CUSTOM",
+          "pattern": "0 8 * * 1"
+        },
+        "nextStepIds": [
+          "28712b30-988f-42a8-a8fd-0ec70795a4ce"
+        ]
+      }
+    }
+  ],
+  "logic_functions": {
+    "d0b228d8-db95-43c8-ba24-4886c2b6b94c": {
+      "id": "d0b228d8-db95-43c8-ba24-4886c2b6b94c",
+      "name": "computeContactPriority",
+      "description": "",
+      "sourceCode": "export const main = async (params) => { const p = params.person || {}; const msg = params.latestMessage; const hasCo = !!p.companyId; let days = 999; let lastContactDate = null; if (msg && msg.receivedAt) { lastContactDate = msg.receivedAt;   days = Math.floor((new Date() - new Date(msg.receivedAt)) / 86400000); } let priority = \"LOW\"; if (hasCo && days <= 30) priority = \"HIGH\"; else if (hasCo) priority = \"MEDIUM\"; else if (days <= 30) priority = \"MEDIUM\"; const emailSubject = msg && msg.subject ? msg.subject : \"No email found\"; const emailBody = msg && msg.text ? msg.text.slice(0, 1500) : \"No email content available\"; const emailDirection = msg && msg.direction ? msg.direction : \"UNKNOWN\"; return { contactPriority: priority, lastContactDays: days, lastContactDate: lastContactDate, shouldAnalyze: hasCo, dealInfo: hasCo ? \"Has company\" : \"No company\", emailSubject, emailBody, emailDirection }; };"
+    },
+    "a7a4a32d-184a-423f-bc54-0062e0b3c4fd": {
+      "id": "a7a4a32d-184a-423f-bc54-0062e0b3c4fd",
+      "name": "computeContactPriorityNoEmail",
+      "description": "",
+      "sourceCode": "export const main = async (params) => { const p = params.person || {}; const hasCo = !!p.companyId; let days = 999; if (p.createdAt) { days = Math.floor((new Date() - new Date(p.createdAt)) / 86400000); } return { contactPriority: hasCo ? \"MEDIUM\" : \"LOW\", lastContactDays: days, lastContactDate: null, shouldAnalyze: false, dealInfo: hasCo ? \"Has company, no email\" : \"No company, no email\", emailSubject: \"No email found\", emailBody: \"No email content available\", emailDirection: \"UNKNOWN\" }; };"
+    },
+    "aad13f4a-fabf-4d53-9793-b5db344e6691": {
+      "id": "aad13f4a-fabf-4d53-9793-b5db344e6691",
+      "name": "parseAiResponse",
+      "description": "",
+      "sourceCode": "export const main = async (params) => { const raw = params.aiResponse || \"\"; try {   const parsed = JSON.parse(raw);   return {     relationshipStatus: parsed.relationshipStatus || \"UNKNOWN\",     aiSummary: parsed.aiSummary || \"\",     confidence: parsed.confidence || 0   }; } catch (e) {   return {     relationshipStatus: \"UNKNOWN\",     aiSummary: \"AI response could not be parsed: \" + raw.slice(0, 100),     confidence: 0   }; } };"
+    }
+  }
+}
